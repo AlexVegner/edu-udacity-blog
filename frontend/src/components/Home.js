@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Divider, Breadcrumb } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import { ALL_POSTS } from '../util/Constants';
 import { activateMenu } from '../actions/menu';
 import { fetchAllPosts } from '../actions/posts';

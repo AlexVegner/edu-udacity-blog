@@ -26,3 +26,13 @@ export const voteOnPost = (id, vote) =>
     },
     body: JSON.stringify({ option: vote })
   }).then(res => res.json());
+
+export const createPost = (post) =>
+  fetch(`${api}/posts`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(post)
+  }).then(res => res.json());

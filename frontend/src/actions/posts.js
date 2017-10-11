@@ -1,5 +1,6 @@
 import * as ReadableApi from '../util/ReadableApi';
 import { GET_POSTS, SORT_POSTS_BY, VOTE_ON_POST } from './types';
+import { push } from 'react-router-redux';
 
 export const getPosts = posts => ({
   type: GET_POSTS,
@@ -29,4 +30,9 @@ export const voteFor = post => ({
 export const voteOnPost = (id, vote) => async dispatch => {
   const post = await ReadableApi.voteOnPost(id, vote);
   return dispatch(voteFor(post));
+};
+
+export const createPost = (post) => async dispatch => {
+  //await ReadableApi.createPost(post);
+  push('/');
 };

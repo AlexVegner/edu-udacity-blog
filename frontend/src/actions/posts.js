@@ -1,6 +1,5 @@
 import * as ReadableApi from '../util/ReadableApi';
 import { GET_POSTS, SORT_POSTS_BY, VOTE_ON_POST } from './types';
-import { push } from 'react-router-redux';
 
 export const getPosts = posts => ({
   type: GET_POSTS,
@@ -32,7 +31,17 @@ export const voteOnPost = (id, vote) => async dispatch => {
   return dispatch(voteFor(post));
 };
 
-export const createPost = (post) => async dispatch => {
-  //await ReadableApi.createPost(post);
-  push('/');
+export const editPost = (post, history) => async dispatch => {
+  await ReadableApi.editPost(post);
+  history.push('/');
+};
+
+export const createPost = (post, history) => async dispatch => {
+  await ReadableApi.createPost(post);
+  history.push('/');
+};
+
+export const deletePost = (postId) => async dispatch => {
+  await ReadableApi.deletePost(postId);
+  dispatch(fetchAllPosts());
 };

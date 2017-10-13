@@ -27,8 +27,8 @@ export const voteOnPost = (id, vote) =>
     body: JSON.stringify({ option: vote })
   }).then(res => res.json());
 
-export const createPost = (post) =>
-  fetch(`${api}/posts`, {
+export const createPost = (post) => {
+  return fetch(`${api}/posts`, {
     method: 'POST',
     headers: {
       ...headers,
@@ -36,3 +36,31 @@ export const createPost = (post) =>
     },
     body: JSON.stringify(post)
   }).then(res => res.json());
+}
+
+export const getPost = (postId) => {
+  return fetch(`${api}/posts/${postId}`, { headers })
+    .then(res => res.json());
+}
+
+
+export const editPost = (post) => {
+  return fetch(`${api}/posts/${post.id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(post)
+  }).then(res => res.json());
+}
+
+export const deletePost = (postId) => {
+  return fetch(`${api}/posts/${postId}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+  }).then(res => res.json());
+}

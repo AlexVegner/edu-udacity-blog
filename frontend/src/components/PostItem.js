@@ -1,14 +1,22 @@
 import React from 'react';
 import { Item } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import Button from 'semantic-ui-react/dist/es/elements/Button/Button'
+import { Form, Dropdown, Input, Segment, TextArea, Button, Icon } from 'semantic-ui-react'
 
-const PostItem = ({ post, voteAction }) => {
+const PostItem = ({ post, voteAction, editPost, deletePost }) => {
   const postDate = new Date(post.timestamp).toLocaleString();
 
   const handleVote = vote => {
     voteAction(post.id, vote);
   };
+
+  function handleEditPost () {
+    editPost(post.id)
+  }
+
+  function handleDeletePost () {
+    deletePost(post.id)
+  }
 
   return (
     <Item>
@@ -21,21 +29,55 @@ const PostItem = ({ post, voteAction }) => {
             </span>
           </Item.Meta>
         </Link>
-        <Item.Description>{post.body}</Item.Description>
-        <Item.Extra>
+        <Item.Description style={styles.bodyMargin}>{post.body}</Item.Description>
+
+        <Button.Group floated='right'>
           <Button
-            floated="right"
             basic
             color='blue'
-            content='Like'
-            icon='heart'
-            label={{ basic: true, color: 'blue', pointing: 'left', content: post.voteScore }}
-            onClick={() => handleVote('upVote')}
-          />
-        </Item.Extra>
+            icon='edit'
+            onClick={() => handleEditPost()}/>
+
+          <Button
+            basic
+            color='red'
+            icon='remove'
+            onClick={() => handleDeletePost()}/>
+        </Button.Group>
+
+        <Button.Group floated='right' style={styles.buttonMargin}>
+          <Button
+            basic
+            color='blue'
+            icon='thumbs up'
+            onClick={() => handleVote('upVote')} />
+
+          <Button
+            basic
+            color='blue'
+          >
+            {post.voteScore}
+          </Button>
+          <Button
+            basic
+            color='blue'
+            icon='thumbs down'
+            onClick={() => handleVote('downVote')} />
+        </Button.Group >
+
       </Item.Content>
     </Item>
   );
 };
 
 export default PostItem;
+
+
+const styles = {
+  bodyMargin: {
+    marginBottom: 10,
+  },
+  buttonMargin: {
+    marginRight: 30,
+  },
+};

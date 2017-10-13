@@ -4,8 +4,9 @@ import { voteOnPost } from '../actions/posts';
 import React, { Component } from 'react';
 import PostItem from './PostItem';
 import { Item, Container, Button } from 'semantic-ui-react';
-import { sortPostsBy } from '../actions/posts';
+import { sortPostsBy, deletePost } from '../actions/posts';
 import { TIMESTAMP, VOTE_SCORE } from '../util/Constants';
+import { withRouter } from 'react-router'
 
 class Posts extends Component {
 
@@ -44,13 +45,18 @@ class Posts extends Component {
   }
 
   render() {
-    const { posts, voteAction } = this.props;
+    const { posts, voteAction, editPost, deletePost } = this.props;
     return (
       <Container fluid>
         {this.renderOrderBy()}
         <Item.Group divided>
           {posts.map(post => (
-            <PostItem key={post.id} post={post} voteAction={voteAction} />
+            <PostItem
+              key={post.id}
+              post={post}
+              voteAction={voteAction}
+              editPost={(postId) => this.props.history.push(`/edit-post/${postId}`)}
+              deletePost={deletePost}/>
           ))}
         </Item.Group>
       </Container>
@@ -81,11 +87,15 @@ const mapDispatchToProps = dispatch => ({
   voteAction: (id, vote) => {
     dispatch(voteOnPost(id, vote));
   },
+  deletePost: (id) => {
+    console.log('deletePost', id)
+    dispatch(deletePost(id));
+  },
   sortBy(sortBy) {
     dispatch(sortPostsBy(sortBy));
   }
 });
 
-const PostsList = connect(mapStateToProps, mapDispatchToProps)(Posts);
+const PostsList = withRouter(connect(mapStateToProps, mapDispatchToProps)(Posts));
 
 export default PostsList;

@@ -24,7 +24,7 @@ const App = () => {
           <Route exact path="/create-post" component={PostForm} />
           <Route exact path="/edit-post/:post_id" component={PostForm} />
           <Route exact path="/topic/:category" component={Home} />
-          <Route exact path="/topic/:category/:post_id" component={PostDetail} />
+          <Route exact path="/post/:post_id" component={PostDetail} />
         </Container>
       </BrowserRouter>
     </Provider>

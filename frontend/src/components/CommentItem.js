@@ -1,47 +1,47 @@
 import React from 'react';
+import { Item } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { Item, Form, Dropdown, Input, Segment, TextArea, Button, Icon } from 'semantic-ui-react'
+import { Form, Dropdown, Input, Segment, TextArea, Button, Icon } from 'semantic-ui-react'
 
-const PostItem = ({ post, voteAction, editPost, deletePost }) => {
-  const postDate = new Date(post.timestamp).toLocaleString();
+const CommentItem = ({ comment, voteAction, editComment, deleteComment, selectedId }) => {
+  const date = new Date(comment.timestamp).toLocaleString();
 
   const handleVote = vote => {
-    voteAction(post.id, vote);
+    voteAction(comment.id, vote);
   };
 
-  function handleEditPost () {
-    editPost(post.id)
+  function handleEdit () {
+    editComment(comment.id)
   }
 
-  function handleDeletePost () {
-    deletePost(post.id)
+  function handleDelete () {
+    deleteComment(comment.id)
   }
+
+  const containerStyle = (selectedId && comment.id === selectedId) ? {backgroundColor: '#ECF8FF', padding: 10} : null
 
   return (
-    <Item>
+    <Item style={containerStyle}>
       <Item.Content>
-        <Link to={`/post/${post.id}`}>
-          <Item.Header className="ui header">{post.title}</Item.Header>
-          <Item.Meta>
+        <Item.Meta>
             <span>
-              <strong>{post.author}</strong> - {postDate}
+              <strong>{comment.author}</strong> - {date}
             </span>
-          </Item.Meta>
-        </Link>
-        <Item.Description style={styles.bodyMargin}>{post.body}</Item.Description>
+        </Item.Meta>
+        <Item.Description style={styles.bodyMargin}>{comment.body}</Item.Description>
 
         <Button.Group floated='right'>
           <Button
             basic
             color='blue'
             icon='edit'
-            onClick={() => handleEditPost()}/>
+            onClick={() => handleEdit()}/>
 
           <Button
             basic
             color='red'
             icon='remove'
-            onClick={() => handleDeletePost()}/>
+            onClick={() => handleDelete()}/>
         </Button.Group>
 
         <Button.Group floated='right' style={styles.buttonMargin}>
@@ -55,7 +55,7 @@ const PostItem = ({ post, voteAction, editPost, deletePost }) => {
             basic
             color='blue'
           >
-            {post.voteScore}
+            {comment.voteScore}
           </Button>
           <Button
             basic
@@ -69,7 +69,7 @@ const PostItem = ({ post, voteAction, editPost, deletePost }) => {
   );
 };
 
-export default PostItem;
+export default CommentItem;
 
 
 const styles = {

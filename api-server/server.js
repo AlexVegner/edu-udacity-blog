@@ -91,7 +91,7 @@ app.get('/', (req, res) => {
       USAGE:
         Get the details for a single comment
 
-    POST /comments/:id
+      POST /comments/:id
       USAGE:
         Used for voting on a comment.
 

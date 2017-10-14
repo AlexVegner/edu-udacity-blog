@@ -5,62 +5,64 @@ const headers = {
   Authorization: 'auth'
 };
 
-export const getCategories = () =>
-  fetch(`${api}/categories`, { headers })
-    .then(res => res.json())
-    .then(data => data.categories);
+export const getCategories = () => get('/categories').then(data => data.categories);
 
-export const getAllPosts = () =>
-  fetch(`${api}/posts`, { headers }).then(res => res.json());
+export const getAllPosts = () => get('/posts')
 
-export const getPosts = category => {
-  return fetch(`${api}/${category}/posts`, { headers }).then(res => res.json());
-};
+export const getPostsForCategory = category => get(`/${category}/posts`)
 
-export const voteOnPost = (id, vote) =>
-  fetch(`${api}/posts/${id}`, {
+export const voteOnPost = (id, vote) => post(`/posts/${id}`, { option: vote })
+
+export const createPost = (body) => post('/posts', body)
+
+export const getPost = (postId) => get(`/posts/${postId}`)
+
+export const editPost = (body) => put(`/posts/${body.id}`, body)
+
+export const deletePost = (postId) => deleteRequest(`/posts/${postId}`)
+
+export const getPostComments = (postId) => get(`/posts/${postId}/comments`)
+
+export const createComment = comment => post('/comments', comment)
+
+export const voteOnComment = (id, vote) => post(`/comments/${id}`, { option: vote })
+
+export const getCommentDetail = id => get(`/comments/${id}`)
+
+export const editComment = (comment) => put(`/comments/${comment.id}`, comment)
+
+export const deleteComment = id => deleteRequest(`/comments/${id}`)
+
+export const get = (path) => {
+  return fetch(`${api}${path}`, { headers }).then(res => res.json());
+}
+
+export const post = (path, params) => {
+  return fetch(`${api}${path}`, {
     method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ option: vote })
-  }).then(res => res.json());
-
-export const createPost = (post) => {
-  return fetch(`${api}/posts`, {
-    method: 'POST',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(post)
+    body: JSON.stringify(params)
   }).then(res => res.json());
 }
 
-export const getPost = (postId) => {
-  return fetch(`${api}/posts/${postId}`, { headers })
-    .then(res => res.json());
-}
-
-
-export const editPost = (post) => {
-  return fetch(`${api}/posts/${post.id}`, {
+export const put = (path, params) => {
+  return fetch(`${api}${path}`, {
     method: 'PUT',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(post)
+    body: JSON.stringify(params)
   }).then(res => res.json());
 }
 
-export const deletePost = (postId) => {
-  return fetch(`${api}/posts/${postId}`, {
+export const deleteRequest = (path) => {
+  return fetch(`${api}${path}`, {
     method: 'DELETE',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json'
-    },
+    headers,
   }).then(res => res.json());
 }
+

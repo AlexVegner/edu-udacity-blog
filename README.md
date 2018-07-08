@@ -1,3 +1,6 @@
+Udacity Nanodegree Program Graduate: 
+https://confirm.udacity.com/LPNV9JKE
+
 Readable is my second React project.
 Thanks Udacity team and React course mentors for great course
 https://www.udacity.com/course/react-nanodegree--nd019

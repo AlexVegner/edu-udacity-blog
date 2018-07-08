@@ -1,76 +1,109 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Item, Form, Dropdown, Input, Segment, TextArea, Button, Icon } from 'semantic-ui-react'
+import * as ReadableApi from '../util/ReadableApi'
 
-const PostItem = ({ post, voteAction, editPost, deletePost }) => {
-  const postDate = new Date(post.timestamp).toLocaleString();
 
-  const handleVote = vote => {
-    voteAction(post.id, vote);
+export default class PostItem extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      comments: [],
+    };
+  }
+
+  componentDidMount() {
+    this.refreshComments()
+  }
+
+  handleVote = vote => {
+    this.props.voteAction(this.props.post.id, vote)
   };
 
-  function handleEditPost () {
-    editPost(post.id)
+  handleEditPost () {
+    this.props.editPost(this.props.post.id)
   }
 
-  function handleDeletePost () {
-    deletePost(post.id)
+  handleDeletePost () {
+    this.props.deletePost(this.props.post.id)
   }
 
-  return (
-    <Item>
-      <Item.Content>
-        <Link to={`/post/${post.id}`}>
-          <Item.Header className="ui header">{post.title}</Item.Header>
-          <Item.Meta>
+  refreshComments = () => {
+    ReadableApi.getPostComments(this.props.post.id).then(comments => this.setState({comments}))
+  }
+
+  render() {
+    const { post } = this.props
+    const postDate = new Date(post.timestamp).toLocaleString();
+    const commentsCount = this.state.comments.length
+    return (
+      <Item>
+        <Item.Content>
+          <Link to={`/post/${post.id}`}>
+            <Item.Header className="ui header">{post.title}</Item.Header>
+            <Item.Meta>
             <span>
               <strong>{post.author}</strong> - {postDate}
             </span>
-          </Item.Meta>
-        </Link>
-        <Item.Description style={styles.bodyMargin}>{post.body}</Item.Description>
+              <span>
+            </span>
+            </Item.Meta>
+          </Link>
+          <Item.Description style={styles.bodyMargin}>{post.body}</Item.Description>
+          <Button.Group floated='right'>
 
-        <Button.Group floated='right'>
-          <Button
-            basic
-            color='blue'
-            icon='edit'
-            onClick={() => handleEditPost()}/>
+            <Button
+              basic
+              color='blue'
+              icon='edit'
+              onClick={() => this.handleEditPost()}/>
 
-          <Button
-            basic
-            color='red'
-            icon='remove'
-            onClick={() => handleDeletePost()}/>
-        </Button.Group>
+            <Button
+              basic
+              color='red'
+              icon='remove'
+              onClick={() => this.handleDeletePost()}/>
+          </Button.Group>
 
-        <Button.Group floated='right' style={styles.buttonMargin}>
-          <Button
-            basic
-            color='blue'
-            icon='thumbs up'
-            onClick={() => handleVote('upVote')} />
+          <Button.Group floated='right' style={styles.buttonMargin}>
+            <Button
+              basic
+              color='blue'
+              icon='thumbs up'
+              onClick={() => this.handleVote('upVote')} />
 
-          <Button
-            basic
-            color='blue'
-          >
-            {post.voteScore}
-          </Button>
-          <Button
-            basic
-            color='blue'
-            icon='thumbs down'
-            onClick={() => handleVote('downVote')} />
-        </Button.Group >
+            <Button
+              basic
+              color='blue'
+            >
+              {post.voteScore}
+            </Button>
+            <Button
+              basic
+              color='blue'
+              icon='thumbs down'
+              onClick={() => this.handleVote('downVote')} />
+          </Button.Group >
 
-      </Item.Content>
-    </Item>
-  );
+          <Link to={`/post/${post.id}`}>
+            <Button
+              style={styles.buttonMargin}
+              floated='right'
+              basic
+              color='blue'
+              content='Comments'
+              icon='comments'
+              label={{ as: 'a', basic: true, color: 'blue', pointing: 'left', content: commentsCount }}
+            />
+          </Link>
+
+
+        </Item.Content>
+      </Item>
+    );
+  }
 };
-
-export default PostItem;
-
 
 const styles = {
   bodyMargin: {

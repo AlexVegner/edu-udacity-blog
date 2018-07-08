@@ -1,22 +1,74 @@
-# Readable API Server
+Readable is my second React project.
+Thanks Udacity team and React course mentors for great course
+https://www.udacity.com/course/react-nanodegree--nd019
 
-This is the starter project for the final assessment project for Udacity's Redux course where you will build a content and comment web app. Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
+## Installation instructions:
 
-This repository includes the code for the backend API Server that you'll use to develop and interact with the front-end portion of the project.
+1. Setup backend
 
-## Start Developing
+1.1. Open api-server folder
+```
+cd api-server
+```
 
-To get started developing right away:
+1.2. Install node packages
+```
+npm install
+```
+or with yarn
+```
+yarn install
+```
 
-* Install and start the API server
-    - `cd api-server`
-    - `npm install`
-    - `node server`
-* In another terminal window, use Create React App to scaffold out the front-end
-    - `create-react-app frontend`
-    - `cd frontend`
-    - `npm start`
+1.3. Start server
+```
+npm start
+```
+or with yarn
+```
+yarn start
+```
 
-## API Server
+Note you can do it in one line:
+```
+cd api-server && npm install && npm start
+```
+or with yarn
+```
+cd api-server && yarn install && yarn start
+```
 
-Information about the API server and how to use it can be found in its [README file](api-server/README.md).
+
+2. Setup frontend
+
+2.1. Open frontend folder
+```
+cd frontend
+```
+
+1.2. Install node packages
+```
+npm install
+```
+or with yarn
+```
+yarn install
+```
+
+1.3. Start frontend
+```
+npm start
+```
+or with yarn
+```
+yarn start
+```
+
+Note you can do it in one line:
+```
+cd frontend && npm install && npm start
+```
+or with yarn
+```
+cd frontend && yarn install && yarn start
+```

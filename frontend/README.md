@@ -1,5 +1,5 @@
 Readable is my second React project.
-Thanks Udacity team and Ract course mentors for great course
+Thanks Udacity team and React course mentors for great course
 https://www.udacity.com/course/react-nanodegree--nd019
 
 ## Installation instructions:
